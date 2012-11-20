@@ -1,0 +1,20 @@
+# Development files #
+######################
+data/config/config.local.neon
+data/log/*
+data/temp/btfj.dat
+data/temp/cache/*
+data/temp/sessions/*
+!.gitignore
+!.htaccess
+
+# Espresso project files #
+######################
+*.esproj
+
+# OS X files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
