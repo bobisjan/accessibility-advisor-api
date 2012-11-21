@@ -1,0 +1,16 @@
+
+common:
+    parameters:
+        database:
+            driver: mysql
+            host: example.com
+            port: 3306
+            dbname: advisor
+            user: developer
+            password: '*****'
+
+
+production < common:
+
+
+development < common:
