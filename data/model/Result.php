@@ -32,7 +32,7 @@ class Result extends Nette\Object
 
 
 
-	public function find($parameters)
+	public function findAll($parameters)
 	{
 		$this->parameters = $this->prepareParameters($parameters);
 		$result = new Nette\ArrayHash();

@@ -50,17 +50,12 @@ $container->router[] = new Route('<model>[/<id>]', function($model, $id, $presen
 		$query = $presenter->request->getParameters();
 		$data = NULL;
 		
-		if ($model === "result") {
-			$data = $store->{$model}->find($query);
-			
+		if ($id !== NULL) {
+			$data = $store->{$model}->find($id);
+		} elseif (isset($query['ids'])) {
+			$data[$model] = $store->{$model}->findMany($query['ids']);
 		} else {
-			if ($id !== NULL) {
-				$data = $store->{$model}->find($id);
-			} elseif (isset($query['ids'])) {
-				$data[$model] = $store->{$model}->findMany($query['ids']);
-			} else {
-				$data[$model] = $store->{$model}->findAll($query);
-			}
+			$data[$model] = $store->{$model}->findAll($query);
 		}
 		return new JsonResponse($data);
 	
