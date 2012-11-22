@@ -106,6 +106,40 @@ class Result extends Nette\Object
 	
 	
 	
+	private function generealRecommendations()
+	{
+	    $items = array();
+	    
+	    $items[] = Nette\ArrayHash::from(array(
+	        'title' => "Web Content Accessibility Guidelines (WCAG) 2.0",
+	        'url' => "http://www.w3.org/TR/WCAG20/",
+	        'description' => "WACAG 2.0 contains wide range of recommendations for making web pages accessible to people with various disabilities. Following those guidelines will also help other people to better experience."));
+	    
+	    $items[] = Nette\ArrayHash::from(array(
+	        'title' => "WAI-ARIA",
+	        'url' => "http://www.w3.org/WAI/intro/aria.php",
+	        'description' => "WAI - ARIA is a specification of a way of development that should be followed in order to make modern interactive Rich Internet Application accessible."));
+	    
+	    $items[] = Nette\ArrayHash::from(array(
+	        'title' => "ISO 13066",
+	        'url' => "http://www.iso.org/iso/catalogue_detail.htm?csnumber=53770",
+	        'description' => "International standard that specifies Interoperability of information technologies (IT) with Assistive Technology (AT). It identifies a variety of common accessibility APIs that are described further in other parts of ISO/IEC 13066."));
+
+        $items[] = Nette\ArrayHash::from(array(
+            'title' => "EU Policy",
+            'url' => "http://ec.europa.eu/ipg/standards/accessibility/eu_policy/index_en.htm",
+            'description' => "European Union guidelines for accessibility."));
+        
+        $items[] = Nette\ArrayHash::from(array(
+            'title' => "Section 508",
+            'url' => "http://www.section508.gov/",
+            'description' => "Section 508 is US organization that deals with barriers in information technologies on Federal level."));
+	    
+	    return $items;
+	}
+	
+	
+	
 	private function recommendations()
 	{
 		$database = $this->store->database;
@@ -128,16 +162,19 @@ class Result extends Nette\Object
 					$this->parameters($this->getImpairmentSql($id), 'title'),
 					$this->parameters($this->getDisabilitySql($id, $disabilityIds), 'ICFCodeQualifiedTitle'),
 					$this->parameters($this->getAgeSql($id, $ageIds), 'groupName'),
-					$this->parameters($this->getNoiceSql($id, $contextOfUseIds), 'title'),
+					$this->parameters($this->getNoiseSql($id, $contextOfUseIds), 'title'),
 					$this->parameters($this->getLightSql($id, $contextOfUseIds), 'title'));
 			}
 		}
+		
+		$recommendations = array_merge($recommendations, $this->generealRecommendations())
+		
 		return $recommendations;
 	}
 	
 	
 	
-	private function createRecomendation($row, $impairments, $disabilities, $ages, $noices, $lights)
+	private function createRecomendation($row, $impairments, $disabilities, $ages, $noises, $lights)
 	{
 		$recomendation = new Nette\ArrayHash();
 		
@@ -149,7 +186,7 @@ class Result extends Nette\Object
 		$recomendation->impairments = $impairments;
 		$recomendation->disabilities = $disabilities;
 		$recomendation->ages = $ages;
-		$recomendation->noices = $noices;
+		$recomendation->noises = $noises;
 		$recomendation->lights = $lights;
 		
 		return $recomendation;
@@ -173,27 +210,26 @@ class Result extends Nette\Object
 	private function personas()
 	{
 		$database = $this->store->database;
-		$personas = array(
-			'primary' => array(),
-			'secondary' => array()
-		);
+		$personas = array();
 		
 		list($applicationTypeId, $disabilityIds, $contextOfUseIds, $ageIds) = $this->parameters;
 		
 		foreach($database->fetchAll($this->sqlForPersonas($disabilityIds)) as $row) {
-			$personas['primary'][] = $this->createPersona($row);
+			$personas[] = $this->createPersona($row, true);
 		}
 		foreach($database->fetchAll($this->sqlForPersonas($disabilityIds, FALSE)) as $row) {
-			$personas['secondary'][] = $this->createPersona($row);
+			$personas[] = $this->createPersona($row, false);
 		}
 		return $personas;
 	}
 	
 	
 	
-	private function createPersona($row)
+	private function createPersona($row, $primary)
 	{
 		$persona = new Nette\ArrayHash();
+		
+		$persona->isPrimary = $primary;
 		
 		$persona->fullName = $row->name;
 		$persona->photo = $row->pathToPhoto;
@@ -347,7 +383,7 @@ class Result extends Nette\Object
 	
 	
 	
-	private function getNoiceSql($recommendationId, $contextOfUseIds)
+	private function getNoiseSql($recommendationId, $contextOfUseIds)
 	{
 		return "SELECT * FROM Context_Of_Use LEFT JOIN Recommendation_has_Context_Of_Use ON Context_Of_Use.`idContext_Of_Use`=Recommendation_has_Context_Of_Use.`Context_Of_Use_idContext_Of_Use` WHERE Recommendation_has_Context_Of_Use.`Recommendation_idRecommendation` = ".$recommendationId." AND Context_Of_Use.`idContext_Of_Use` ".$contextOfUseIds." AND Context_Of_Use.`contextCathegory`='noisiness';";
 	}
