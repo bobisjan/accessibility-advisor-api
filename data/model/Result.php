@@ -106,7 +106,7 @@ class Result extends Nette\Object
 	
 	
 	
-	private function generealRecommendations()
+	private function generalRecommendations()
 	{
 	    $items = array();
 	    
@@ -135,7 +135,11 @@ class Result extends Nette\Object
             'url' => "http://www.section508.gov/",
             'description' => "Section 508 is US organization that deals with barriers in information technologies on Federal level."));
 	    
-	    return $items;
+	    $general = new Nette\ArrayHash();
+	    $general->title = "General recommendations and accessibility rules";
+	    $general->isGeneral = TRUE;
+	    $general->content = $items;
+	    return $general;
 	}
 	
 	
@@ -167,8 +171,7 @@ class Result extends Nette\Object
 			}
 		}
 		
-		$recommendations = array_merge($recommendations, $this->generealRecommendations())
-		
+		$recommendations[] = $this->generalRecommendations();
 		return $recommendations;
 	}
 	
