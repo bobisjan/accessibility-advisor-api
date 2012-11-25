@@ -57,7 +57,7 @@ class Answer extends Nette\Object
 		
 		foreach ($this->answers as $answer) {
 			if (in_array($answer->id, $ids)) {
-				$items[] = $anwser;
+				$items[] = $answer;
 			}
 		}
 		return $items;
