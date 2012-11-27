@@ -50,6 +50,10 @@ $container->router[] = new Route('<model>[/<id>]', function($model, $id, $presen
 		$query = $presenter->request->getParameters();
 		$data = NULL;
 		
+		unset($query['callback']);
+		unset($query['model']);
+		unset($query['id']);
+		
 		if ($id !== NULL) {
 			$data = $store->{$model}->find($id);
 		} elseif (isset($query['ids'])) {
