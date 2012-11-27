@@ -21,16 +21,25 @@ class Store extends Nette\Object
 	private $fixtures;
 
 	/** @var Group */
-	private $groups;
+	private $group;
 	
 	/** @var Question */
-	private $questions;
+	private $question;
 	
 	/** @var Answer */
-	private $answers;
+	private $answer;
 	
 	/** @var Result */
 	private $result;
+	
+	/** @var Recommendation */
+	private $recommendation;
+	
+	/** @var Persona */
+	private $persona;
+	
+	/** @var Tool */
+	private $tool;
 	
 	
 	
@@ -45,30 +54,30 @@ class Store extends Nette\Object
 	
 	public function getGroups()
 	{
-		if (!$this->groups) {
-			$this->groups = new Group($this, $this->fixtures['groups']);
+		if (!$this->group) {
+			$this->group = new Group($this, $this->fixtures['groups']);
 		}
-		return $this->groups;
+		return $this->group;
 	}
 	
 	
 	
 	public function getQuestions()
 	{
-		if (!$this->questions) {
-			$this->questions = new Question($this, $this->fixtures['questions']);
+		if (!$this->question) {
+			$this->question = new Question($this, $this->fixtures['questions']);
 		}
-		return $this->questions;
+		return $this->question;
 	}
 	
 	
 	
 	public function getAnswers()
 	{
-		if (!$this->answers) {
-			$this->answers = new Answer($this, $this->fixtures['answers']);
+		if (!$this->answer) {
+			$this->answer = new Answer($this, $this->fixtures['answers']);
 		}
-		return $this->answers;
+		return $this->answer;
 	}
 	
 	
@@ -79,6 +88,36 @@ class Store extends Nette\Object
 			$this->result = new Result($this);
 		}
 		return $this->result;
+	}
+	
+	
+	
+	public function getRecommendations()
+	{
+		if (!$this->recommendation) {
+			$this->recommendation = new Recommendation($this);
+		}
+		return $this->recommendation;
+	}
+	
+	
+	
+	public function getPersonas()
+	{
+		if (!$this->persona) {
+			$this->persona = new Persona($this);
+		}
+		return $this->persona;
+	}
+	
+	
+	
+	public function getTools()
+	{
+		if (!$this->tool) {
+			$this->tool = new Tool($this);
+		}
+		return $this->tool;
 	}
 	
 	
