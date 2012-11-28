@@ -14,29 +14,29 @@ use Nette;
 class Group extends Nette\Object
 {
 
-	/** @var Store */
-	private $store;
+    /** @var Store */
+    private $store;
 
-	/** @var array */
-	private $groups;
-
-
-
-	public function __construct(Store $store, $fixtures = array())
-	{
-		$this->store = $store;
-		$this->groups = array();
-		
-		foreach ($fixtures as $fixture) {
-			$this->groups[] = $fixture;
-		}
-	}
+    /** @var array */
+    private $groups;
 
 
 
-	public function findAll()
-	{
-		return $this->groups;
-	}
+    public function __construct(Store $store, $fixtures = array())
+    {
+        $this->store = $store;
+        $this->groups = array();
+
+        foreach ($fixtures as $fixture) {
+            $this->groups[] = $fixture;
+        }
+    }
+
+
+
+    public function findAll()
+    {
+        return $this->groups;
+    }
 
 }

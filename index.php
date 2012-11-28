@@ -41,34 +41,34 @@ $container = $configurator->createContainer();
 
 // Setup router using mod_rewrite detection
 $container->router[] = new Route('[index.php]', function() {
-	return 'Accessibility Advisor API';
+    return 'Accessibility Advisor API';
 });
 
 $container->router[] = new Route('<model>[/<id>]', function($model, $id, $presenter) use ($configurator) {
-	try {
-		$store = $presenter->context->getService('store');
-		$query = $presenter->request->getParameters();
-		$data = NULL;
-		
-		unset($query['callback']);
-		unset($query['model']);
-		unset($query['id']);
-		
-		if ($id !== NULL) {
-			$data = $store->{$model}->find($id);
-		} elseif (isset($query['ids'])) {
-			$data[$model] = $store->{$model}->findMany($query['ids']);
-		} else {
-			$data[$model] = $store->{$model}->findAll($query);
-		}
-		return new JsonResponse($data);
-	
-	} catch (Exception $e) {
-		if (!$configurator->isDebugMode()) {
-			Debugger::log($e);
-		}
-		return $presenter->error($e->getMessage(), IResponse::S500_INTERNAL_SERVER_ERROR);
-	}
+    try {
+        $store = $presenter->context->getService('store');
+        $query = $presenter->request->getParameters();
+        $data = NULL;
+
+        unset($query['callback']);
+        unset($query['model']);
+        unset($query['id']);
+
+        if ($id !== NULL) {
+            $data = $store->{$model}->find($id);
+        } elseif (isset($query['ids'])) {
+            $data[$model] = $store->{$model}->findMany($query['ids']);
+        } else {
+            $data[$model] = $store->{$model}->findAll($query);
+        }
+        return new JsonResponse($data);
+
+    } catch (Exception $e) {
+        if (!$configurator->isDebugMode()) {
+            Debugger::log($e);
+        }
+        return $presenter->error($e->getMessage(), IResponse::S500_INTERNAL_SERVER_ERROR);
+    }
 });
 
 // Run the application!

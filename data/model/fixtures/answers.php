@@ -43,13 +43,13 @@ $questions[] = array(
 
 
 function answers($sql) {
-	global $database;
-	$answers = array();
-	
-	foreach ($database->fetchAll($sql) as $value) {
-	    $answers[] = Nette\ArrayHash::from($value);
-	}
-	return $answers;
+    global $database;
+    $answers = array();
+
+    foreach ($database->fetchAll($sql) as $value) {
+        $answers[] = Nette\ArrayHash::from($value);
+    }
+    return $answers;
 }
 
 
@@ -59,16 +59,14 @@ $id = 1;
 
 foreach ($questions as $value) {
     foreach (answers($value['sql']) as $item) {
-    	$answer = new Nette\ArrayHash();
-    	$answer->id = $id;
-    	$answer->title = $item->title;
-    	$answer->disabled = in_array($id, $value['disabled']);
-    	$answer->question_id = $value['id'];
-    	
-    	$answer->backend = $item->id;
-    	
-    	$answers[$id] = $answer;
-    	$id++;
+        $answer = new Nette\ArrayHash();
+        $answer->id = $id;
+        $answer->title = $item->title;
+        $answer->disabled = in_array($id, $value['disabled']);
+        $answer->question_id = $value['id'];
+        $answer->backend = $item->id;
+        $answers[$id] = $answer;
+        $id++;
     }
 }
 
