@@ -45,34 +45,33 @@ class Persona extends Nette\Object
 
 
 
-	private function createPersona($row, $primary)
-	{
-		$persona = new Nette\ArrayHash();
-		
-		$persona->isPrimary = $primary;
-		
-		$persona->fullName = $row->name;
-		$persona->photo = $row->pathToPhoto;
-		$persona->age = $row->age;
-		$persona->meritalStatus = $row->meritalStatus;
-		$persona->living = $row->living;
-		$persona->children = $row->children;
-		$persona->location = $row->location;
-		$persona->education = $row->education;
-		$persona->job = $row->impairment;
-		
-		$persona->format = $row->personaFormat;
-		
-		$persona->introduction = $row->personaIntroduction;
-		$persona->technology = $row->personaTechnology;
-		$persona->problems = $row->personaProblems;
-		$persona->needs = $row->personaNeeds;
-		$persona->month = $row->personaMonth;
-	
-		$persona->freeText = $row->personaFreeText;
-		
-		return $persona;
-	}
+    private function createPersona($row, $primary)
+    {
+	    $persona = new Nette\ArrayHash();	
+	    
+	    $persona->isPrimary = $primary;
+	    $persona->fullName = $row->name;
+	    $persona->photo = $row->pathToPhoto;
+	    $persona->age = $row->age;
+	    $persona->meritalStatus = $row->meritalStatus;
+	    $persona->living = $row->living;
+	    $persona->children = $row->children;
+	    $persona->location = $row->location;
+	    $persona->education = $row->education;
+	    $persona->job = $row->impairment;
+
+        $persona->format = $row->personaFormat;
+
+        $persona->introduction = $row->personaIntroduction;
+        $persona->technology = $row->personaTechnology;
+        $persona->problems = $row->personaProblems;
+        $persona->needs = $row->personaNeeds;
+        $persona->month = $row->personaMonth;
+
+        $persona->freeText = $row->personaFreeText;
+
+        return $persona;
+    }
 
 
 

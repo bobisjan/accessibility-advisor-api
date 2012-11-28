@@ -125,6 +125,6 @@ class Store extends Nette\Object
             $this->tool = new Tool($this);
         }
         return $this->tool;
-	}
+    }
 
 }

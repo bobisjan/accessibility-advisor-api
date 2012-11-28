@@ -75,7 +75,7 @@ class Tool extends Nette\Object
         foreach ($userPlatforms as $platform) {
             $tool->userPlatforms[] = $platform['usrOperatingSystem'];
         }
-		return $tool;
+        return $tool;
     }
 
 

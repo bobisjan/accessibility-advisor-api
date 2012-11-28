@@ -79,7 +79,7 @@ class Recommendation extends Nette\Object
     private function prepareParameters($parameters)
     {
         $params = array();
-		$params[] = $parameters['application-type'];
+        $params[] = $parameters['application-type'];
 
         if (isset($parameters['disability'])) {
             $params[] = "IN (" . implode(", ", $parameters['disability']) . ")";
@@ -202,8 +202,7 @@ class Recommendation extends Nette\Object
 
     private function getRecommendationsSql($applicationTypeId, $contextOfUseIds, $ageIds, $disabilityIds)
     {
-        return "
-		       SELECT DISTINCT Recommendation.idRecommendation FROM
+        return "SELECT DISTINCT Recommendation.idRecommendation FROM
 			  (((((((Recommendation LEFT JOIN Recommendation_has_Application_Type
 			   ON Recommendation.`idRecommendation`=Recommendation_has_Application_Type.`Recommendation_idRecommendation`
 			   )
